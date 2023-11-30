@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { db } from "~/server/db";
 
 import { api } from "~/trpc/react";
 
@@ -20,6 +21,7 @@ export  function CreatePost() {
     <form
       onSubmit={ (e) => {
         e.preventDefault();
+        
         createPost.mutate({ name });
       }}
       className="flex flex-col gap-2"

@@ -9,9 +9,9 @@ import {
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
+    .query(({ ctx, input }) => {
       return {
-        greeting: `Hello ${input.text}`,
+       
       };
     }),
 
@@ -20,7 +20,7 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       // simulate a slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
+        
       return ctx.db.post.create({
         data: {
           name: input.name,
