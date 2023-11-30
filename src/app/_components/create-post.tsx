@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { api } from "~/trpc/react";
 
-export function CreatePost() {
+export  function CreatePost() {
   const router = useRouter();
   const [name, setName] = useState("");
 
@@ -18,7 +18,7 @@ export function CreatePost() {
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={ (e) => {
         e.preventDefault();
         createPost.mutate({ name });
       }}
