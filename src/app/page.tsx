@@ -9,7 +9,7 @@ export default async function Home() {
   const session = await getServerAuthSession();
 
   return (
-   <h1>Hello Production</h1>
+   <> <CreatePost /> </>
   );
 }
 
@@ -31,3 +31,4 @@ async function CrudShowcase() {
     </div>
   );
 }
+CrudShowcase()
