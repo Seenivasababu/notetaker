@@ -19,7 +19,7 @@ const Content = () => {
   );
   const createTopic = api.topic.create.useMutation({
     onSuccess: () => {
-      refetchTopics();
+      void refetchTopics();
     },
   });
   console.log(topics);
