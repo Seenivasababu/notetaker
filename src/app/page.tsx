@@ -1,6 +1,4 @@
 
-
-import { getServerAuthSession } from "~/server/auth";
 import Header from "./_components/Header";
 import Content from "./_components/Content";
 
