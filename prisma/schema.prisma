@@ -28,6 +28,7 @@ model Account {
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
@@ -78,7 +79,7 @@ model Note {
     updatedAt DateTime @updatedAt
     title     String
     content   String   @db.Text
-    topic     Topic    @relation(fields: [topicId], references: [id])
+    topic     Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
     topicId   String
 
     @@index([topicId])

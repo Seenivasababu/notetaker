@@ -5,6 +5,7 @@ import { RouterOutputs } from "~/trpc/shared";
 import NoteEditor from "./NoteEditor";
 import NoteCard from "./NoteCard";
 import { FaTrash } from "react-icons/fa";
+import Link from "next/link";
 
 type Topic = RouterOutputs["topic"]["getAll"][0];
 type Note = RouterOutputs["note"]["getAll"][0];
@@ -73,28 +74,25 @@ const Content = () => {
           }}
         />
         <div className="divider"></div>
-        <ul className="menu w-56 rounded-box bg-base-100 p-2">
+        <ul className="menu w-56 rounded-box ">
           {topics?.map((topic) => {
             return (
-              <li key={topic.id}>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedTopic(topic);
-                  }}
-                >
-                  {topic.title}
-                </a>
-                <button
-                  className="p-2 text-sm hover:text-red-500"
-                  onClick={() => {
-                    deletetopic.mutate({ id: topic.id });
-                  }}
-                >
-                  <FaTrash />
-                </button>
-              </li>
+              <div
+              key={topic.id}
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedTopic(topic);
+                void refetchNotes();
+              }}
+              className={`${
+                topic.id === selectedTopic?.id ? "bg-slate-300 rounded-md" : ""
+              } flex cursor-pointer justify-between hover:bg-slate-300 hover:rounded-md px-3 py-1 transition-colors  duration-200`}
+            >
+              <button>{topic.title}</button>
+              <button className="p-2 text-sm hover:text-red-500" onClick={()=>{
+                deletetopic.mutate({id:topic.id})
+              }}><FaTrash/></button>
+            </div>
             );
           })}
         </ul>
