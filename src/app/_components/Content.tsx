@@ -4,6 +4,7 @@ import { api } from "~/trpc/react";
 import { RouterOutputs } from "~/trpc/shared";
 import NoteEditor from "./NoteEditor";
 import NoteCard from "./NoteCard";
+import { FaTrash } from "react-icons/fa";
 
 type Topic = RouterOutputs["topic"]["getAll"][0];
 type Note = RouterOutputs["note"]["getAll"][0];
@@ -47,6 +48,13 @@ const Content = () => {
     },
   });
 
+  const deletetopic = api.topic.delete.useMutation({
+    onSuccess(data) {
+      void refetchTopics();
+      void refetchNotes();
+    },
+  });
+
   return (
     <div className="mx-5 mt-5 grid grid-cols-4 gap-2">
       <div className="px-2">
@@ -78,6 +86,14 @@ const Content = () => {
                 >
                   {topic.title}
                 </a>
+                <button
+                  className="p-2 text-sm hover:text-red-500"
+                  onClick={() => {
+                    deletetopic.mutate({ id: topic.id });
+                  }}
+                >
+                  <FaTrash />
+                </button>
               </li>
             );
           })}
