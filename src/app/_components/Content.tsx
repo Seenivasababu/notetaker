@@ -12,6 +12,9 @@ const Content = () => {
   const [topic, setTopic] = useState("");
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
 
+  const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   const { data: topics, refetch: refetchTopics } = api.topic.getAll.useQuery(
     undefined,
     {
@@ -33,12 +36,14 @@ const Content = () => {
   const createNote = api.note.create.useMutation({
     onSuccess: () => {
       void refetchNotes();
+      setLoading(false);
     },
   });
 
   const deleteNote = api.note.delete.useMutation({
     onSuccess: () => {
       void refetchNotes();
+      setDeleteLoading(false);
     },
   });
 
@@ -83,14 +88,20 @@ const Content = () => {
           {notes?.map((note: Note) => (
             <div key={note.id} className="mt-1">
               <NoteCard
+                deleteLoading={deleteLoading}
                 note={note}
-                onDelete={() => void deleteNote.mutate({ id: note.id })}
+                onDelete={() => {
+                  setDeleteLoading(true);
+                  void deleteNote.mutate({ id: note.id });
+                }}
               />
             </div>
           ))}
         </div>
         <NoteEditor
+          loading={loading}
           onSave={({ title, content }) => {
+            setLoading(true);
             void createNote.mutate({
               title,
               content,
