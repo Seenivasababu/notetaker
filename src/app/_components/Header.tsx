@@ -17,7 +17,7 @@ const Header = async () => {
           <div>
             <Link
               href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="rounded-full btn btn-neutral bg-slate-900  mx-4 px-8 py-1 font-semibold no-underline transition hover:bg-slate-500"
+              className="rounded-full btn btn-neutral bg-slate-900  mx-4 px-8 py-1 font-semibold no-underline transition "
             >
               {session ? "Sign out" : "Sign in"}
             </Link>

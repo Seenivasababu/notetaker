@@ -13,23 +13,24 @@ const NoteCard = ({
   onDelete: () => void;
   deleteLoading: boolean;
 }) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(true);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   return (
-    <div className="card mt-1 border border-gray-200 bg-base-100 shadow-xl">
-      <div className="card-body m-0 p-2">
-        <div
-          className={`collapse-arrow ${
-            isExpanded ? "collapse-open" : "collapse"
-          }`}
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          <div className="collapse-title text-xl font-bold">{note.title}</div>
-          <div className="collapse-content">
-            <article className="prose lg:prose-lg">
-              <ReactMarkdown>{note.content}</ReactMarkdown>
-            </article>
+    <div className=" mt-1 border border-gray-200 bg-base-100 shadow-xl">
+      <div className=" m-0 p-2">
+        <div >
+          <div className=" text-xl font-bold">
+            <span onClick={() => setIsExpanded(!isExpanded)} className="hover:bg-slate-200 px-2 rounded-full">
+              {isExpanded ? "-" : "+"}</span>
+            {note.title}
           </div>
+          {isExpanded && (
+            <div className="mt-2 ml-2">
+              <article className="prose lg:prose-lg">
+                <ReactMarkdown>{note.content}</ReactMarkdown>
+              </article>
+            </div>
+          )}
         </div>
         <div className="card-actions mx-2 flex justify-start">
           <button
